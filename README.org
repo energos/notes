@@ -1,0 +1,5 @@
+#+TITLE: Energos's Anarchic Notes Collection
+#+OPTIONS: toc:nil num:nil html-postamble:nil
+#+STARTUP: showall
+
+- [[file:mightylisy.org][Energos's Mighty New Computer]]

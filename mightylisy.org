@@ -1,0 +1,127 @@
+#+TITLE: Energos's Mighty New Computer
+#+AUTHOR: energos
+#+OPTIONS: toc:nil num:nil html-postamble:nil
+#+STARTUP: showall
+
+* Chorumelas
+  - Preços aproximados levantados em junho de 2019
+  - Não há fatos, apenas opiniões
+  - Marcas citadas são propriedade de seus respectivos titulares
+* Placa mãe
+  - [[https://www.msi.com/Motherboard/B350M-PRO-VH-PLUS][MSI B350M PRO-VH PLUS | MSI Global]]
+  - R$ 390 na [[https://www.kabum.com.br/produto/100127][KaBuM!]]
+  - [[http://oc.jagatreview.com/2018/07/hands-on-overclocking-msi-b350m-pro-vh-plus-di-ryzen-2200g/][Hands-on Overclocking: MSI B350M Pro-VH Plus (di Ryzen 2200G) – Jagat OC]]
+  - VRM - 4 fases para CPU e 2 fases para SOC - mosfets apenas razoáveis
+    - [[https://www.hardwareluxx.de/community/f12/pga-am4-mainboard-vrm-liste-1155146.html][Übersicht - PGA AM4 Mainboard VRM Liste]]
+    - 1x NIKOS [[http://cn.niko-sem.com/manager_admin/upload_file/nikosem/831/154892228248319.pdf][PK616BA]] (lado alto) por fase, 2x NIKOS [[http://cn.niko-sem.com/manager_admin/upload_file/nikosem/195/154892229621955.pdf][PK632BA]] (lado baixo) por fase
+  - Contras
+    - VRM não é dos melhores
+    - áudio Realtek ALC887 medíocre (não que eu perceba)
+    - sem M.2
+    - apenas 4 portas sata
+    - HDMI apenas 1.2 (importante apenas se for usar vídeo integrado)
+    - sem DisplayPort (importante apenas se for usar vídeo integrado)
+    - sem dissipador no VRM do SOC (importante apenas se for usar vídeo integrado)
+    - apenas 1 slot PCIe x16 (importante se for usar 2 placas de vídeo)
+    - apenas 2 slots DIMM
+    - apenas 2 conectores para fan
+    - não suporta memória ECC (ninguém usa mesmo...)
+    - praticamente inexistem reviews na internet
+    - não é uma [[https://www.msi.com/Motherboard/B450-GAMING-PRO-CARBON-AC][B450 GAMING PRO CARBON AC]]
+  - A Favor
+    - VRM muito razoável, com dissipador muito razoável
+    - microATX
+    - única placa decente atualmente disponível a um preço não indecente no indecente mercado brasileiro
+    - muito barata, R$ 340 na oferta
+    - melhor custo/benefício do momento
+    - sem RGB
+* CPU
+  - [[https://www.amd.com/en/products/cpu/amd-ryzen-7-2700][2nd Gen Ryzen™ 7 2700 Processor | AMD]]
+  - R$ 1270 na [[https://www.kabum.com.br/produto/95564][KaBuM!]], R$ 1200 na [[https://www.pichau.com.br/processador-amd-ryzen-7-2700-octa-core-3-2ghz-4-1ghz-turbo-20mb-cache-am4-yd2700bbafbox][Pichau]], R$ 1287 na [[https://www.terabyteshop.com.br/produto/9266/processador-amd-ryzen-7-2700-32ghz-41ghz-max-turbo-yd2700bbafbox-r2l-octa-core-16mb-cooler-wraith-spire-com-led-imp][Terabyte]]
+  - Contras
+    - não é um [[https://www.amd.com/en/products/cpu/amd-ryzen-7-2700x][2700X]], nem um [[https://www.amd.com/en/products/cpu/amd-ryzen-9-3900x][3900X]], muito menos um [[https://www.amd.com/en/products/cpu/amd-ryzen-9-3950x][3950X]]
+    - cooler anêmico, indispensável trocar se for fazer overclock
+    - apenas 3.2 GHz (sem overclock)
+    - caro
+    - sem vídeo integrado
+    - overclock limitado, depende da loteria do silício
+  - A Favor
+    - 8 cores, 16 threads
+    - *Oito* cores! *Dezesseis* threads!
+    - 3.2 GHz é mais que suficiente. E sempre dá para fazer overclock...
+    - excelente performance single thread, absurda performace multi thread
+    - apenas 65W (sem overclock), não esquenta nada
+    - destravado para overclock
+    - o cooler incluso é suficiente se não fizer overclock
+    - irresistível em [[https://gatry.com/promocao/detalhes/89893/processador-amd-ryzen-7-2700-3-2-ghz-20mb-am4-yd2700bbafbox][oferta]] por R$ 850
+* Cooler
+  - [[http://www.deepcool.com/product/cpucooler/2017-01/7_6408.shtml][DEEPCOOL GAMMAXX 400 red]]
+  - R$ 100 na [[https://www.pichau.com.br/cooler-deepcool-gammaxx-400-led-vermelho-dp-mch4-gmx400rd][Pichau]]
+  - [[https://adrenaline.uol.com.br/forum/threads/review-deep-cool-gammaxx-400.594460/][Review Cooler Deep Cool Gammaxx 400 | Fórum Adrenaline]]
+  - [[https://www.clubedohardware.com.br/artigos/refrigera%C3%A7%C3%A3o/teste-do-cooler-deepcool-gammaxx-400-r35936/][Teste do Cooler Deepcool Gammaxx 400 | Clube do Hardware]]
+  - Contras
+    - tem leds
+    - pode não caber num gabinete muito pequeno
+    - difícil de montar se a placa mãe já estiver colocada no gabinete
+  - A Favor
+    - os leds são vermelhos
+    - silencioso
+    - ótimo desempenho
+    - não precisa (nem deve) remover ou trocar o 'backplate' da cpu
+    - bom e barato, custo/benefício imbatível
+* Memória
+  - 2x [[https://www.crucial.com/usa/en/bls8g4d30aesbk][Crucial Ballistix Sport LT Gray 8GB DDR4-3000 (BLS8G4D30AESBK)]]
+  - R$ 300 na [[https://www.kabum.com.br/produto/101187/memoria-crucial-ballistix-sport-lt-8gb-3000mhz-ddr4-cl15-cinza-bls8g4d30aesbk/?tag=BLS8G4D30AESBK][KaBuM!]]
+  - Contras
+    - muito cara mesmo na oferta por R$ 275 (memória ainda está com preços absurdos)
+  - A Favor
+    - está funcionando
+* Placa Vídeo
+  - [[http://www.xfxforce.com/en-us/products/amd-radeon-rx-500-series/rx-560d-4gb-sf-rx-560d4sfg5][XFX Radeon RX 560D 4GB (RX-560D4SFG5)]]
+  - R$ 690 na [[https://www.kabum.com.br/produto/92270/placa-de-video-xfx-amd-radeon-rx-560d-4gb-14cu-single-fan-gddr5-rx-560d4sfg5][KaBuM!]]
+  - [[https://www.youtube.com/watch?v=_36yNWw_07g][Por que AMD Radeon | YouTube]]
+  - Contras
+    - absurdamente cara mesmo na oferta por R$ 600
+  - A Favor
+    - DisplayPort
+    - HDMI 2.0
+* SSD
+  - [[https://www.kingston.com/br/ssd/consumer/sa400s37][Kingston SSD A400 - 240GB]]
+  - R$ 170 na [[https://www.kabum.com.br/produto/85197][KaBuM!]], R$ 167 na [[https://www.pichau.com.br/ssd-kingston-a400-240gb-sata-3-2-5-sa400s37-240g][Pichau]]
+  - [[https://www.clubedohardware.com.br/artigos/armazenamento/teste-do-ssd-kingston-a400-de-240-gib-r36955/][Teste do SSD Kingston A400 de 240 GiB | Clube do Hardware]]
+  - Contras
+    - nada por enquanto
+  - A Favor
+    - preços baixando
+* HDD
+  - [[https://www.wd.com/products/internal-storage/wd-blue-pc-desktop-hard-drive.html][HDD WD Blue 2TB - 5400 rpm]]
+  - R$ 370 na [[https://www.kabum.com.br/produto/80597][KaBuM!]]
+  - Contras
+    - lento, 5400 rpm
+    - talvez o [[https://www.kabum.com.br/produto/100916][BarraCuda]] seja uma opção melhor
+  - A Favor
+    - silencioso, 5400 rpm
+* Fonte
+  - [[https://www.corsair.com/us/en/Categories/Products/Power-Supply-Units/txm-series-2017-config/p/CP-9020132-NA][TX-M Series™ TX650M — 650 Watt 80 Plus® Gold Certified PSU]]
+  - R$ 552 na [[https://www.kabum.com.br/produto/91026][KaBuM!]]
+  - Contras
+    - absurdamente cara, uma [[https://www.kabum.com.br/produto/91021][CX450]] seria suficiente
+  - A Favor
+    - semi modular
+    - silenciosa
+    - muito fria
+* Gabinete
+  - [[https://en.sharkoon.com/product/13951][Sharkoon V1000]]
+  - R$ 180 na [[https://www.kabum.com.br/produto/97224][KaBuM!]]
+  - Contras
+    - poderia ser mais silencioso
+    - inútil abertura para fan no painel lateral
+    - sem filtro de poeira no painel lateral
+  - A Favor
+    - simples, bonito e de boa qualidade
+    - filtro de poeira no painel frontal
+    - filtro de poeira no painel inferior (fonte)
+* Gravador DVD
+  - Gravador DVD/RW Sony ad7240s-2d
+  - R$ 80 na [[https://www.multimidia.inf.br/produto/gravador__dvdrw_sony_ad7240s-2d_sata/16635][Multimidia]]
+  - quem ainda usa isso?
