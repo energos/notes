@@ -1,0 +1,253 @@
+#+TITLE: Energos's The (almost) Definitive Gentoo Installation Guide
+#+AUTHOR: energos
+#+OPTIONS: toc:nil num:nil html-postamble:nil
+#+STARTUP: showall
+
+* Documentação
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation][Gentoo Handbook: Installing Gentoo]]
+* Baixar mídia de instalação
+  - [[https://www.gentoo.org/downloads/][Downloads – Gentoo Linux]]
+* Conveniências
+  : rc-service gpm start
+  : ls /sys/firmware/efi/efivars/
+  : bind '"\e[A": history-search-backward' && bind '"\e[B": history-search-forward' && echo OKYDOKY
+* Rede wireless
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation#Preparing_for_wireless_access][Gentoo Handbook: Preparing for wireless access]]
+  : ifconfig
+  : iw dev wlp0s3f3u7 info
+  : iw dev wlp0s3f3u7 link
+  : ip link set dev wlp0s3f3u7 up
+  : net-setup
+* Acesso remoto
+  : passwd
+  : /etc/init.d/sshd start
+* Particionamento
+  #+BEGIN_EXAMPLE
+  livecd ~ # fdisk -l /dev/sda
+  Disk /dev/sda: 74.6 GiB, 80060424192 bytes, 156368016 sectors
+  Disk model: SAMSUNG SP0802N
+  Units: sectors of 1 * 512 = 512 bytes
+  Sector size (logical/physical): 512 bytes / 512 bytes
+  I/O size (minimum/optimal): 512 bytes / 512 bytes
+  Disklabel type: dos
+  Disk identifier: 0x7e6e2a30
+
+  Device     Boot    Start       End  Sectors  Size Id Type
+  /dev/sda1           2048   4196351  4194304    2G 82 Linux swap / Solaris
+  /dev/sda2        4196352  71305215 67108864   32G 83 Linux
+  /dev/sda3       71305216 156368015 85062800 40.6G 83 Linux
+
+  livecd ~ # fdisk -l /dev/sdb
+  Disk /dev/sdb: 149.1 GiB, 160041885696 bytes, 312581808 sectors
+  Disk model: SAMSUNG HM160HC
+  Units: sectors of 1 * 512 = 512 bytes
+  Sector size (logical/physical): 512 bytes / 512 bytes
+  I/O size (minimum/optimal): 512 bytes / 512 bytes
+  Disklabel type: dos
+  Disk identifier: 0x82f8fe71
+
+  Device     Boot    Start       End   Sectors   Size Id Type
+  /dev/sdb1           2048   8390655   8388608     4G 82 Linux swap / Solaris
+  /dev/sdb2        8390656  75499519  67108864    32G 83 Linux
+  /dev/sdb3       75499520 312581807 237082288 113.1G 83 Linux
+  #+END_EXAMPLE
+* Criar sistemas de arquivos
+  : mkswap /dev/sda1
+  : mkswap /dev/sdb1
+  : mkfs.ext4 /dev/sda2
+  : mkfs.ext4 /dev/sda3
+  : mkfs.ext4 /dev/sdb2
+  : mkfs.ext4 /dev/sdb3
+* Ativar swap
+  : swapon /dev/sda1
+  : swapon /dev/sdb1
+* Montar partições
+  : mount /dev/sda2 /mnt/gentoo/ -o noatime
+  : mkdir /mnt/gentoo/home
+  : mount /dev/sda3 /mnt/gentoo/home/ -o noatime
+  : mkdir /mnt/gentoo/home/Depot
+  : mount /dev/sdb3 /mnt/gentoo/home/Depot/ -o noatime
+* Testar/acertar relógio
+  : date
+  : ntpd -q -g
+* Baixar "Stage 3"
+  : mkdir /mnt/gentoo/home/Depot/Downloads
+  : mkdir /mnt/gentoo/home/Depot/Downloads/Gentoo
+  : cd /mnt/gentoo/home/Depot/Downloads/Gentoo/
+  : wget http://distfiles.gentoo.org/releases/amd64/autobuilds/20190731T214503Z/stage3-amd64-20190731T214503Z.tar.xz
+  : wget http://distfiles.gentoo.org/releases/amd64/autobuilds/20190731T214503Z/stage3-amd64-20190731T214503Z.tar.xz.DIGESTS
+* Expandir o "Stage 3"
+  : cd /mnt/gentoo
+  : tar xpvf home/Depot/Downloads/Gentoo/stage3-amd64-20190731T214503Z.tar.xz --xattrs-include='*.*' --numeric-owner
+* TODO Copiar/criar/editar arquivos de configuração
+  : cp /mnt/gentoo/etc/portage/make.conf /mnt/gentoo/etc/portage/make.conf.original
+  : /mnt/gentoo/etc/portage/package.mask/*
+  : /mnt/gentoo/etc/portage/package.use/*
+  : /mnt/gentoo/etc/portage/make.conf
+  : /mnt/gentoo/etc/portage/package.accept_keywords
+  : /mnt/gentoo/etc/portage/package.license
+  : /mnt/gentoo/etc/hosts
+  : /mnt/gentoo/etc/resolv.conf
+  : /mnt/gentoo/etc/fstab
+  : /mnt/gentoo/etc/issue
+  : /mnt/gentoo/etc/resolv.conf
+  : /mnt/gentoo/etc/conf.d/consolefont
+  : /mnt/gentoo/etc/conf.d/keymaps
+  : /mnt/gentoo/etc/conf.d/hostname
+  : /mnt/gentoo/etc/default/grub
+  : /mnt/gentoo/etc/grub.d/40_custom
+  : /mnt/gentoo/etc/timezone
+  : /mnt/gentoo/etc/locale.gen
+  : /mnt/gentoo/root/.bash_profile
+  : /mnt/gentoo/root/.bashrc
+  : /mnt/gentoo/etc/ssh/ssh_config
+  : /mnt/gentoo/etc/ssh/sshd_config
+* Montar os sistemas de arquivos /proc, /sys e /dev
+  #+BEGIN_EXAMPLE
+  mount -t proc /proc /mnt/gentoo/proc && mount --rbind /sys /mnt/gentoo/sys && mount --make-rslave /mnt/gentoo/sys && mount --rbind /dev /mnt/gentoo/dev && mount --make-rslave /mnt/gentoo/dev && echo 'OK!'
+  #+END_EXAMPLE
+* chroot in the new environment
+  : chroot /mnt/gentoo /bin/bash
+  : source /etc/profile && export PS1="(chroot) $PS1" && bind '"\e[A": history-search-backward' && bind '"\e[B": history-search-forward' && echo OKYDOKY
+  : mkdir /var/db/repos/gentoo
+  : emerge-webrsync
+  Opcional
+  : emerge --sync
+* Get the news
+  : man news.eselect
+  : eselect news list
+  : eselect news read
+  : eselect --color=yes news read all | less -r
+* Selecionar o perfil
+  : eselect profile list
+  : eselect profile set 16 # o número pode ser outro!
+* Atualizar portage
+  : emerge --ask --verbose --oneshot --noreplace portage
+* O indispensável bash-completion
+  : emerge --ask --verbose bash-completion
+  : source /etc/profile && export PS1="(chroot) $PS1" && bind '"\e[A": history-search-backward' && bind '"\e[B": history-search-forward' && echo OKYDOKY
+* Atualizar mundo
+  : emerge --ask --verbose --update --deep --newuse @world
+  : emerge --ask --verbose --depclean
+* Programas essenciais 0
+  : emerge --ask --verbose nano zile gentoolkit cpuid2cpuflags app-misc/mc tmux
+* Acertar zona horária
+  : echo "Brazil/East" > /etc/timezone
+  : emerge --config sys-libs/timezone-data
+* Configurar locales
+  : zile /etc/locale.gen
+  : locale-gen
+  : eselect locale list
+  : eselect locale set 4 # o número pode ser outro!
+  : env-update && source /etc/profile && export PS1="(chroot) $PS1" && bind '"\e[A": history-search-backward' && bind '"\e[B": history-search-forward' && echo OKYDOKY
+* Editar /etc/fstab
+  #+BEGIN_EXAMPLE
+  tmpfs           /tmp            tmpfs   size=4G,noatime,nodev,nosuid    0 0
+  /dev/sda1       none            swap    sw                              0 0
+  /dev/sdb1       none            swap    sw                              0 0
+
+  /dev/sda2       /               ext4    defaults,noatime                0 1
+  /dev/sda3       /home           ext4    defaults,noatime                0 2
+  /dev/sdb3       /home/Depot     ext4    defaults,noatime                0 2
+
+  /dev/cdrom      /mnt/cdrom      auto    noauto,ro,user                  0 0
+  #+END_EXAMPLE
+* Instalar fontes do kernel
+  Ver [[https://wiki.gentoo.org/wiki/Kernel/Upgrade][Kernel/Upgrade - Gentoo Wiki]]
+  : emerge --ask --verbose gentoo-sources genkernel
+  : ls -l /usr/src/linux
+* Instalar kernel
+  Ver [[https://wiki.gentoo.org/wiki/Kernel/Upgrade][Kernel/Upgrade - Gentoo Wiki]]
+  - Opção 1: Compilar o kernel
+    : genkernel all
+    ou
+    : genkernel --menuconfig all
+  - Opção 2: Copiar um kernel já existente
+    por exemplo, [[https://wiki.gentoo.org/wiki/Gentoo_installation_tips_and_tricks#Using_the_Installation_CD_kernel][Gentoo Tricks and Tips - Using the Installation CD kernel]]
+* Senha root
+  : passwd
+* Configurar rede
+  : /etc/conf.d/hostname
+  : /etc/hosts
+* Configurar serviços
+  : emerge --ask --verbose --noreplace dhcpcd openssh syslog-ng logrotate cronie gpm chrony
+  : rc-update add dhcpcd default && rc-update add cronie default && rc-update add sshd default && rc-update add syslog-ng default && rc-update add gpm default && rc-update add chronyd default && echo 'OK!'
+  : rc-update show
+* Adicionar usuário
+  : useradd -m -G users,wheel,audio,video,lp,uucp,cdrom,portage,usb -s /bin/bash energos
+  : passwd energos
+* Instalar boot-loader
+  - Bios boot
+    : emerge --ask --verbose grub memtest86+
+    : grub-install /dev/sda
+  - EFI boot
+    + memtest86+ não funciona com EFI
+    + *Importante* /boot/efi deve estar montado se for EFI
+    + efivars deve estar habilitada para escrita
+    : emerge --ask --verbose grub
+    : mount | grep efivars
+    : mount -o remount,rw /sys/firmware/efi/efivars
+    : grub-install /dev/sda
+* Configurar grub
+  : /etc/default/grub
+  : /etc/grub.d/40_custom
+  #+BEGIN_EXAMPLE
+  menuentry "================================================================================" {
+          true
+  }
+  menuentry "System restart" {
+          echo "System rebooting..."
+          reboot
+  }
+  menuentry "Firmware setup" {
+          fwsetup
+  }
+  menuentry "System shutdown" {
+          echo "System shutting down..."
+          halt
+  }
+  #+END_EXAMPLE
+  : grub-mkconfig -o /boot/grub/grub.cfg
+* Teclado console
+  : loadkeys us-acentos
+  ou
+  : loadkeys br-abnt2
+  editar /etc/conf.d/keymaps
+* Fonte console
+  : setfont cp850-8x16
+  ou
+  : setfont ter-128b
+  editar /etc/conf.d/consolefont
+  : rc-update add consolefont default
+* Programas essenciais 1
+  : emerge --ask --verbose --noreplace bash bash-completion openssh app-misc/screen tmux app-misc/mc nano zile jed mlocate the_silver_searcher dev-vcs/git bc wget curl pciutils usbutils ethtool linux-firmware w3m gentoolkit gentoo-sources genkernel cpuid2cpuflags cmus alsa-utils fortune-mod neofetch sshfs eix layman lshw dmidecode whois multitail syslinux htop iotop lsof eject socat netcat ckermit cdrtools dosfstools figlet rlwrap p7zip zip unrar iw
+* Salvar volume
+  : rc-update add alsasound boot
+* X e toda a sua paçoca favorita
+  : emerge --ask --verbose --noreplace xorg-server setxkbmap wmctrl x11-misc/xclip xclock xdotool xdpyinfo xev xfontsel xgamma xinit xkill xmag xmessage xmodmap xprop xrandr xsetroot xterm xtermcontrol rxvt-unicode mesa-progs font-bh-lucidatypewriter-100dpi open-sans dejavu terminus-font inconsolata font-misc-misc liberation-fonts font-bh-ttf openbox obconf obmenu-generator rxvt-unicode gkrellm gkrellm-volume fbpanel volumeicon parcellite gmrun feh qiv scrot synergy slock pcmanfm xdg-utils qt5ct qtsvg lxappearance dev-perl/Gtk2 zathura-pdf-mupdf zathura-djvu zathura openoffice-bin gphoto2 media-gfx/graphviz imagemagick nmap emacs geany meld mpv youtube-dl calibre firefox
+* Permitir acesso à câmera (gphoto)
+  : usermod -a -G plugdev energos
+* Definir programas padrão
+  : su energos
+  : xdg-mime default org.pwmt.zathura.desktop application/pdf
+  : xdg-mime default qiv.desktop image/jpeg
+  : xdg-mime default qiv.desktop image/png
+* TODO Arquivos locais
+* TODO dotfiles
+* Gerar ssh key para github
+  : ssh-keygen -t rsa -b 4096 -C "nonono@nono.no"
+  : ssh-keygen -E md5 -lf ~/.ssh/id_rsa.pub
+  : ssh -T git@github.com
+* Wireless/Wicd
+  : emerge --ask --verbose wicd
+  : rc-update del dhcpcd
+  : rc-update add wicd default
+  [[https://wiki.gentoo.org/wiki/Wicd][Wicd]] não está tendo manutenção. Considerar [[https://wiki.archlinux.org/index.php/ConnMan][ConnMan]].
+* Reboot
+  : exit
+  : cd
+  : umount -l /mnt/gentoo/dev{/shm,/pts,}
+  : umount -R /mnt/gentoo
+  : reboot
+* Enjoy
+  Funcionou :-)
