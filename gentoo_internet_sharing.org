@@ -1,0 +1,129 @@
+#+TITLE: Energos's Gentoo Notes - Internet Sharing
+#+AUTHOR: energos
+#+OPTIONS: toc:nil num:nil html-postamble:nil
+#+STARTUP: showall
+
+* Documentação
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Networking][Gentoo Linux amd64 Handbook: Network configuration - Gentoo Wiki]]
+  - [[https://wiki.gentoo.org/wiki/Home_router#NAT_.28a.k.a._IP-masquerading.29][Home router - Gentoo Wiki]]
+  - [[https://wiki.gentoo.org/wiki/Dnsmasq][Dnsmasq - Gentoo Wiki]]
+  - [[https://wiki.gentoo.org/wiki/Iptables][iptables - Gentoo Wiki]]
+
+  - [[https://wiki.archlinux.org/index.php/Internet_sharing][Internet sharing - ArchWiki]]
+  - [[https://wiki.archlinux.org/index.php/Iptables][iptables - ArchWiki]]
+  - [[https://wiki.archlinux.org/index.php/Simple_stateful_firewall][Simple stateful firewall - ArchWiki]]
+
+* Descobrir interfaces no servidor
+  #+BEGIN_EXAMPLE
+    $ dmesg | grep -E 'eth|wlan'
+    [   15.060541] eth0: SiS 900 PCI Fast Ethernet at 0x000000009f17f8f6, IRQ 19, 00:01:6c:b9:5c:2a
+    [   15.346552] 8139too 0000:00:09.0 eth1: RealTek RTL8139 at 0x00000000361930c1, 00:e0:4c:51:97:d1, IRQ 19
+    [   16.132525] 8139too 0000:00:09.0 enp0s9: renamed from eth1
+    [   16.195168] sis900 0000:00:04.0 enp0s4: renamed from eth0
+    [   19.643535] rt73usb 1-2:1.0 wlp0s3f3u2: renamed from wlan0
+  #+END_EXAMPLE
+  Então temos 3 interfaces:
+  - enp0s4 - wired - não usada
+  - enp0s9 - wired - rede interna para os clientes
+  - wlp0s3f3u2 - wireless - rede externa para acesso internet
+  
+  #+BEGIN_EXAMPLE
+    # ethtool enp0s9 | grep detected
+    Link detected: yes
+
+    # ethtool wlp0s3f3u2 | grep detected
+    Link detected: yes
+  #+END_EXAMPLE
+
+
+  : # iw dev wlp0s3f3u2 link
+
+  Definir um ip para o interface interno
+  : # ip link set up dev enp0s9 
+  : # ip addr add 192.168.0.1/24 dev enp0s9
+
+  Como salvar isso? [[https://wiki.gentoo.org/wiki/Netifrc][netifrc]] ?
+
+  Habilitar NAT
+
+  #+BEGIN_EXAMPLE
+    # sysctl -a | grep forward
+    # sysctl net.ipv4.ip_forward=1
+
+    # iptables -t nat -A POSTROUTING -o wlp0s3f3u2 -j MASQUERADE
+    # iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    # iptables -A FORWARD -i enp0s9 -o wlp0s3f3u2 -j ACCEPT
+  #+END_EXAMPLE
+
+  WTF! Tem que recompilar o kernel.
+  Referência obrigatória: [[https://wiki.gentoo.org/wiki/Kernel/Upgrade][Kernel/Upgrade - Gentoo Wiki]]
+  #+BEGIN_EXAMPLE
+    # iptables -t nat -A POSTROUTING -o wlp0s3f3u2 -j MASQUERADE
+    iptables v1.6.1: can't initialize iptables table `nat': Table does not exist (do you need to insmod?)
+    Perhaps iptables or your kernel needs to be upgraded.
+
+    # zgrep -i CONFIG_IP_NF_NAT /proc/config.gz 
+    # CONFIG_IP_NF_NAT is not set
+  #+END_EXAMPLE
+  WTF again!
+  #+BEGIN_EXAMPLE
+  # iptables -t nat -A POSTROUTING -o wlp0s3f3u2 -j MASQUERADE
+  iptables: No chain/target/match by that name.
+  #+END_EXAMPLE
+
+  - [[http://shorewall.org/kernel.htm][ShoreWall - Kernel Configuration]]
+  - CONFIG_IP_NF_NAT
+  - CONFIG_IP_NF_TARGET_MASQUERADE
+  - CONFIG_IP_NF_TARGET_NETMAP
+  - CONFIG_IP_NF_TARGET_REDIRECT
+
+  WTF! Tem conflitos com wicd. Damn...
+  Usar connman?
+  Ou este truquezinho [[https://www.linuxquestions.org/questions/slackware-14/does-wicd-support-multiple-connections-one-wired-and-one-wireless-711856/][Does wicd support multiple connections (one wired and one wireless)?]] que parece funcionar bem?
+
+
+  : # iptables --list-rules
+  : # iptables-save -f /etc/iptables/iptables.rules
+  : # iptables-restore /etc/iptables/iptables.rules
+
+
+
+
+
+: /etc/init.d/iptables save
+ou ?
+: rc-service iptables save
+
+: rc-service iptables check
+: rc-service iptables save
+: rc-service iptables start
+: rc-update add iptables default
+
+* TLDR
+  #+BEGIN_SRC bash
+    ip addr add 192.168.0.1/24 dev enp0s9
+    ip link set up dev enp0s9
+
+    # /etc/conf.d/net
+    config_enp0s9="192.168.0.1 netmask 255.255.255.0"
+
+    ln -s net.lo net.enp0s9
+    /etc/init.d/net.enp0s9 start
+    rc-update add net.enp0s9 default
+
+    iptables -t nat -A POSTROUTING -o wlp0s3f3u2 -j MASQUERADE
+    iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    iptables -A FORWARD -i enp0s9 -o wlp0s3f3u2 -j ACCEPT
+    iptables --list-rules
+    rc-service iptables save
+    rc-service iptables check
+    rc-update add iptables default
+
+    # /etc/sysctl.conf
+    net.ipv4.ip_forward = 1
+
+    rc-update show | grep sysctl
+    sysctl net.ipv4.ip_forward=1
+    rc-update add sysctl boot
+
+  #+END_SRC
