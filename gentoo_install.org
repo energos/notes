@@ -58,6 +58,10 @@
   : mkfs.ext4 /dev/sda3
   : mkfs.ext4 /dev/sdb2
   : mkfs.ext4 /dev/sdb3
+  Se precisar uma partição UEFI
+  : mkfs.fat -F32 /dev/sda1
+  Desabilitar o journal em SSDs
+  : mkfs.ext4 -O "^has_journal" /dev/sda2
 * Ativar swap
   : swapon /dev/sda1
   : swapon /dev/sdb1
@@ -90,7 +94,6 @@
   : /mnt/gentoo/etc/resolv.conf
   : /mnt/gentoo/etc/fstab
   : /mnt/gentoo/etc/issue
-  : /mnt/gentoo/etc/resolv.conf
   : /mnt/gentoo/etc/conf.d/consolefont
   : /mnt/gentoo/etc/conf.d/keymaps
   : /mnt/gentoo/etc/conf.d/hostname
@@ -123,12 +126,14 @@
   : eselect profile set 16 # o número pode ser outro!
 * Atualizar portage
   : emerge --ask --verbose --oneshot --noreplace portage
+* Atualizar mundo
+  : emerge --ask --verbose --update --deep --newuse @world
+  Para evitar dependencias circulares por causa do emacs
+  : USE="-emacs" emerge --ask --verbose --update --deep --newuse --usepkgonly @world
+  : emerge --ask --verbose --depclean
 * O indispensável bash-completion
   : emerge --ask --verbose bash-completion
   : source /etc/profile && export PS1="(chroot) $PS1" && bind '"\e[A": history-search-backward' && bind '"\e[B": history-search-forward' && echo OKYDOKY
-* Atualizar mundo
-  : emerge --ask --verbose --update --deep --newuse @world
-  : emerge --ask --verbose --depclean
 * Programas essenciais 0
   : emerge --ask --verbose nano zile gentoolkit cpuid2cpuflags app-misc/mc tmux
 * Acertar zona horária
@@ -220,7 +225,7 @@
   editar /etc/conf.d/consolefont
   : rc-update add consolefont default
 * Programas essenciais 1
-  : emerge --ask --verbose --noreplace bash bash-completion openssh app-misc/screen tmux app-misc/mc nano zile jed mlocate the_silver_searcher dev-vcs/git bc wget curl pciutils usbutils ethtool linux-firmware w3m gentoolkit gentoo-sources genkernel cpuid2cpuflags cmus alsa-utils fortune-mod neofetch sshfs eix layman lshw dmidecode whois multitail syslinux htop iotop lsof eject socat netcat ckermit cdrtools dosfstools figlet rlwrap p7zip zip unrar iw
+  : emerge --ask --verbose --noreplace bash bash-completion openssh app-misc/screen tmux app-misc/mc nano zile jed mlocate the_silver_searcher dev-vcs/git bc wget curl pciutils usbutils ethtool linux-firmware w3m gentoolkit gentoo-sources genkernel cpuid2cpuflags cmus alsa-utils fortune-mod neofetch sshfs eix layman lshw dmidecode whois multitail syslinux htop iotop lsof eject socat netcat ckermit cdrtools dosfstools figlet rlwrap p7zip zip unrar iw md5deep
 * Salvar volume
   : rc-update add alsasound boot
 * X e toda a sua paçoca favorita
