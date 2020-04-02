@@ -4,9 +4,24 @@
 #+STARTUP: showall
 
 * Documentação
-  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation][Gentoo Handbook: Installing Gentoo]]
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation][Gentoo Linux amd64 Handbook: Installing Gentoo]]
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Working][Gentoo Linux amd64 Handbook: Working with Gentoo]]
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Portage][Gentoo Linux amd64 Handbook: Working with Portage]]
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Networking][Gentoo Linux amd64 Handbook: Network configuration]]
+
+  - [[https://packages.gentoo.org/packages/sys-kernel/gentoo-sources][sys-kernel/gentoo-sources – Gentoo Packages]]
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel][Gentoo Handbook: Configuring the Linux kernel]]
+  - [[https://wiki.gentoo.org/wiki/Kernel][Kernel - Gentoo Wiki]]
+  - [[https://wiki.gentoo.org/wiki/Kernel/Upgrade][Kernel/Upgrade - Gentoo Wiki]]
+  - [[https://wiki.gentoo.org/wiki/Kernel/Removal][Kernel/Removal - Gentoo Wiki]]
+  - [[https://wiki.gentoo.org/wiki/Ryzen][Ryzen - Gentoo Wiki]]
+  - [[https://wiki.gentoo.org/wiki/AMD_microcode][AMD microcode - Gentoo Wiki]]
+  - [[https://wiki.gentoo.org/wiki/AMDGPU][AMDGPU - Gentoo Wiki]]
+
+  - [[https://unix.stackexchange.com/questions/130917/compare-two-kernel-config-files-from-the-menuconfig-perspective][Compare two kernel config files from the menuconfig perspective? - Stack Exchange]]
 * Baixar mídia de instalação
   - [[https://www.gentoo.org/downloads/][Downloads – Gentoo Linux]]
+  - [[https://gentoo.c3sl.ufpr.br/releases/amd64/autobuilds/][Gentoo "mirror" mais próximo]]
 * Conveniências
   : rc-service gpm start
   : ls /sys/firmware/efi/efivars/
@@ -97,8 +112,8 @@
   : /mnt/gentoo/etc/conf.d/consolefont
   : /mnt/gentoo/etc/conf.d/keymaps
   : /mnt/gentoo/etc/conf.d/hostname
-  : /mnt/gentoo/etc/default/grub
-  : /mnt/gentoo/etc/grub.d/40_custom
+  : /mnt/gentoo/etc/default/grub        # postpone
+  : /mnt/gentoo/etc/grub.d/40_custom    # postpone
   : /mnt/gentoo/etc/timezone
   : /mnt/gentoo/etc/locale.gen
   : /mnt/gentoo/root/.bash_profile
@@ -128,9 +143,12 @@
   : emerge --ask --verbose --oneshot --noreplace portage
 * Atualizar mundo
   : emerge --ask --verbose --update --deep --newuse @world
+  ou mais corajosamente
+  : emerge --ask --verbose --update --deep --with-bdeps=y --newuse --changed-deps @world
   Para evitar dependencias circulares por causa do emacs
   : USE="-emacs" emerge --ask --verbose --update --deep --newuse --usepkgonly @world
-  : emerge --ask --verbose --depclean
+  Limpar pacotes desnecessários
+  : emerge --ask --depclean
 * O indispensável bash-completion
   : emerge --ask --verbose bash-completion
   : source /etc/profile && export PS1="(chroot) $PS1" && bind '"\e[A": history-search-backward' && bind '"\e[B": history-search-forward' && echo OKYDOKY
@@ -167,6 +185,10 @@
     : genkernel all
     ou
     : genkernel --menuconfig all
+    ou
+    : genkernel --kernel-config=/proc/config.gz --menuconfig all
+    ou
+    : genkernel --kernel-config=/home/energos/Work/dotfiles/gentoo/kernel/4.19.97/config --kernel-append-localversion="-custom-01" all
   - Opção 2: Copiar um kernel já existente
     por exemplo, [[https://wiki.gentoo.org/wiki/Gentoo_installation_tips_and_tricks#Using_the_Installation_CD_kernel][Gentoo Tricks and Tips - Using the Installation CD kernel]]
 * Senha root
@@ -225,16 +247,23 @@
   editar /etc/conf.d/consolefont
   : rc-update add consolefont default
 * Programas essenciais 1
-  : emerge --ask --verbose --noreplace bash bash-completion openssh app-misc/screen tmux app-misc/mc nano zile jed mlocate the_silver_searcher dev-vcs/git bc wget curl pciutils usbutils ethtool linux-firmware w3m gentoolkit gentoo-sources genkernel cpuid2cpuflags cmus alsa-utils fortune-mod neofetch sshfs eix layman lshw dmidecode whois multitail syslinux htop iotop lsof eject socat netcat ckermit cdrtools dosfstools figlet rlwrap p7zip zip unrar iw md5deep
+  : emerge --ask --verbose --noreplace bash bash-completion openssh app-misc/screen tmux app-misc/mc nano zile jed mlocate the_silver_searcher dev-vcs/git bc wget curl pciutils usbutils ethtool linux-firmware w3m gentoolkit gentoo-sources genkernel cpuid2cpuflags cmus alsa-utils fortune-mod neofetch sshfs eix eselect-repository lshw dmidecode whois multitail syslinux htop iotop lsof eject socat netcat ckermit cdrtools dosfstools figlet rlwrap p7zip zip unrar iw md5deep
 * Salvar volume
   : rc-update add alsasound boot
 * X e toda a sua paçoca favorita
   : emerge --ask --verbose --noreplace xorg-server setxkbmap wmctrl x11-misc/xclip xclock xdotool xdpyinfo xev xfontsel xgamma xinit xkill xmag xmessage xmodmap xprop xrandr xsetroot xterm xtermcontrol rxvt-unicode mesa-progs font-bh-lucidatypewriter-100dpi open-sans dejavu terminus-font inconsolata font-misc-misc liberation-fonts font-bh-ttf openbox obconf obmenu-generator rxvt-unicode gkrellm gkrellm-volume fbpanel volumeicon parcellite gmrun feh qiv scrot synergy slock pcmanfm xdg-utils qt5ct qtsvg lxappearance dev-perl/Gtk2 zathura-pdf-mupdf zathura-djvu zathura openoffice-bin gphoto2 media-gfx/graphviz imagemagick nmap emacs geany meld mpv youtube-dl calibre firefox
+* Algo do KDE
+  : emerge --ask --verbose okular kdiff3 tellico kpat kate ktorrent spectacle kmahjongg k3b kde-apps/dolphin gwenview svgpart
+  - ktorrent puxa um monte de dependências...
+* Tudo está no @world
+  - [[https://github.com/energos/dotfiles/tree/master/gentoo/world/world][dotfiles/gentoo/world]]
 * Permitir acesso à câmera (gphoto)
   : usermod -a -G plugdev energos
 * Definir programas padrão
   : su energos
   : xdg-mime default org.pwmt.zathura.desktop application/pdf
+  : xdg-mime default org.pwmt.zathura.desktop image/vnd.djvu
+  : xdg-mime default org.pwmt.zathura.desktop image/vnd.djvu+multipage
   : xdg-mime default qiv.desktop image/jpeg
   : xdg-mime default qiv.desktop image/png
 * TODO Arquivos locais
