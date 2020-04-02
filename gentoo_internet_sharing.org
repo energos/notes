@@ -127,3 +127,33 @@ ou ?
     rc-update add sysctl boot
 
   #+END_SRC
+* Different host, same configuration, different interfaces.
+  Interfaces:
+  - enp27s0 - wired - rede interna para os clientes
+  - wlp32s0f3u4 - wireless - rede externa para acesso internet
+
+  #+BEGIN_SRC bash
+    # /etc/conf.d/net
+    config_enp27s0="192.168.0.1 netmask 255.255.255.0"
+
+    cd /etc/init.d
+    ln -s net.lo net.enp27s0
+    /etc/init.d/net.enp27s0 start
+    rc-update add net.enp27s0 default
+
+    iptables -t nat -A POSTROUTING -o wlp32s0f3u4 -j MASQUERADE
+    iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    iptables -A FORWARD -i enp27s0 -o wlp32s0f3u4 -j ACCEPT
+    iptables --list-rules
+    rc-service iptables save
+    rc-service iptables check
+    rc-update add iptables default
+
+    # /etc/sysctl.conf
+    net.ipv4.ip_forward = 1
+
+    rc-update show | grep sysctl
+    sysctl net.ipv4.ip_forward=1
+    rc-update add sysctl boot
+
+  #+END_SRC
