@@ -247,11 +247,11 @@
   editar /etc/conf.d/consolefont
   : rc-update add consolefont default
 * Programas essenciais 1
-  : emerge --ask --verbose --noreplace bash bash-completion openssh app-misc/screen tmux app-misc/mc nano zile jed mlocate the_silver_searcher dev-vcs/git bc wget curl pciutils usbutils ethtool linux-firmware w3m gentoolkit gentoo-sources genkernel cpuid2cpuflags cmus alsa-utils fortune-mod neofetch sshfs eix eselect-repository lshw dmidecode whois multitail syslinux htop iotop lsof eject socat netcat ckermit cdrtools dosfstools figlet rlwrap p7zip zip unrar iw md5deep
+  : emerge --ask --verbose --noreplace bash bash-completion openssh app-misc/screen tmux app-misc/mc nano zile jed mlocate the_silver_searcher dev-vcs/git bc wget curl pciutils usbutils ethtool linux-firmware w3m gentoolkit gentoo-sources genkernel cpuid2cpuflags cmus alsa-utils fortune-mod neofetch sshfs eix eselect-repository lshw dmidecode whois multitail syslinux htop iotop lsof eject socat netcat ckermit cdrtools dosfstools figlet rlwrap p7zip zip unrar pbzip2 iw md5deep
 * Salvar volume
   : rc-update add alsasound boot
 * X e toda a sua paçoca favorita
-  : emerge --ask --verbose --noreplace xorg-server setxkbmap wmctrl x11-misc/xclip xclock xdotool xdpyinfo xev xfontsel xgamma xinit xkill xmag xmessage xmodmap xprop xrandr xsetroot xterm xtermcontrol rxvt-unicode mesa-progs font-bh-lucidatypewriter-100dpi open-sans dejavu terminus-font inconsolata font-misc-misc liberation-fonts font-bh-ttf openbox obconf obmenu-generator rxvt-unicode gkrellm gkrellm-volume fbpanel volumeicon parcellite gmrun feh qiv scrot synergy slock pcmanfm xdg-utils qt5ct qtsvg lxappearance dev-perl/Gtk2 zathura-pdf-mupdf zathura-djvu zathura openoffice-bin gphoto2 media-gfx/graphviz imagemagick nmap emacs geany meld mpv youtube-dl calibre firefox
+  : emerge --ask --verbose --noreplace xorg-server setxkbmap wmctrl x11-misc/xclip xclock xdotool xdpyinfo xev xfontsel xgamma xinit xkill xmag gxmessage xmessage xmodmap xprop xrandr xsetroot xhost xterm xtermcontrol rxvt-unicode mesa-progs font-bh-lucidatypewriter-100dpi open-sans dejavu terminus-font inconsolata font-misc-misc liberation-fonts font-bh-ttf openbox obconf obmenu-generator rxvt-unicode gkrellm gkrellm-volume fbpanel volumeicon parcellite gmrun feh qiv scrot synergy slock pcmanfm xdg-utils qt5ct qtsvg lxappearance dev-perl/Gtk2 zathura-pdf-mupdf zathura-djvu zathura openoffice-bin gphoto2 media-gfx/graphviz imagemagick nmap emacs geany meld mpv youtube-dl calibre firefox
 * Algo do KDE
   : emerge --ask --verbose okular kdiff3 tellico kpat kate ktorrent spectacle kmahjongg k3b kde-apps/dolphin gwenview svgpart
   - ktorrent puxa um monte de dependências...
