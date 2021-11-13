@@ -1,0 +1,59 @@
+#+TITLE: Energos's The (almost) Definitive Gentoo Cloning Guide
+#+AUTHOR: energos
+#+OPTIONS: toc:nil num:nil html-postamble:nil
+#+STARTUP: showall
+
+* Save /etc
+  : mkdir /mnt/sda2
+  : mount /dev/sda2 /mnt/sda2
+  : cp /mnt/sda2/etc /root/sda2 ???
+
+* Format target partitions
+  |               |      |                                       |
+  |---------------+------+---------------------------------------|
+  | '/'           | sda2 | mkfs.ext4 -O "^has_journal" /dev/sda2 |
+  | '/home'       | sdb6 | keep                                  |
+  | '/home/Depot' | sdb7 | keep                                  |
+  | '/var'        | sdb3 | mkfs.ext4 /dev/sdb3                   |
+  | '/boot/efi'   | sda1 | keep                                  |
+  | swap          | sdb2 | keep                                  |
+
+* Mount target tree
+  : mkdir /mnt/gentoo
+  : mount /dev/sda2 /mnt/gentoo/ -o noatime
+  : mkdir /mnt/gentoo/var
+  : mount /dev/sdb3 /mnt/gentoo/var/ -o noatime
+  : mkdir /mnt/gentoo/boot
+  : mkdir /mnt/gentoo/boot/efi
+  : mount /dev/sda1 /mnt/gentoo/boot/efi/
+
+* Mount source tree
+  : mkdir /mnt/gentoo
+  : mount /dev/sda5 /mnt/gentoo/ -o ro
+
+* Suck it
+  : rsync -axHAXS --numeric-ids --info=progress2 --del --stats root@192.168.0.111:/mnt/gentoo/usr/ usr/
+
+* Lots of config files
+  - /etc/hosts
+  - /etc/fstab
+  - /etc/conf.d/consolefont
+  - /etc/conf.d/keymaps
+  - /etc/conf.d/hwclock
+  - /etc/conf.d/hostname
+  - /etc/default/grub
+
+* Here we goooo
+  : mount -t proc /proc /mnt/gentoo/proc && mount --rbind /sys /mnt/gentoo/sys && mount --make-rslave /mnt/gentoo/sys && mount --rbind /dev /mnt/gentoo/dev && mount --make-rslave /mnt/gentoo/dev && echo 'OK!'
+  : chroot /mnt/gentoo /bin/bash
+  : source /etc/profile && export PS1="(chroot) $PS1" && bind '"\e[A": history-search-backward' && bind '"\e[B": history-search-forward' && echo OKYDOKY
+
+  : grub-install /dev/sda
+  : grub-mkconfig -o /boot/grub/grub.cfg
+
+* Reboot
+  : exit
+  : cd
+  : umount -l /mnt/gentoo/dev{/shm,/pts,}
+  : umount -R /mnt/gentoo
+  : reboot
