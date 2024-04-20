@@ -19,6 +19,14 @@
   - [[https://wiki.gentoo.org/wiki/AMDGPU][AMDGPU - Gentoo Wiki]]
 
   - [[https://unix.stackexchange.com/questions/130917/compare-two-kernel-config-files-from-the-menuconfig-perspective][Compare two kernel config files from the menuconfig perspective? - Stack Exchange]]
+** Unsorted links list
+   - [[https://www.youtube.com/results?search_query=gentoo+install][gentoo install - YouTube]]
+   - [[https://www.youtube.com/watch?v=QvlAPJ_lfz8][Instalando Gentoo do zero em 2021 - YouTube]]
+   - [[https://www.youtube.com/watch?v=ldLgypRL2_A][Gentoo installation in 7 minutes??! - How to install Gentoo - YouTube]]
+   - [[https://www.youtube.com/watch?v=J7W9MItUSGw][Gentoo: A ℂ𝕠𝕞𝕗𝕪 Install Guide - YouTube]]
+   - [[https://www.youtube.com/watch?v=eOXJrL5mZfs][The Simple Way To Install Gentoo Linux - YouTube]]
+   - [[https://www.youtube.com/playlist?list=PL3cu45aM3C2CADmCYeVhS4KTVut9MoMc9][Gentoo - YouTube]]
+   - [[https://wiki.archlinux.org/title/VirtualBox/Install_Arch_Linux_as_a_guest][VirtualBox/Install Arch Linux as a guest - ArchWiki]]
 * Baixar mídia de instalação
   - [[https://www.gentoo.org/downloads/][Downloads – Gentoo Linux]]
   - [[https://gentoo.c3sl.ufpr.br/releases/amd64/autobuilds/][Gentoo "mirror" mais próximo]]
@@ -37,6 +45,7 @@
   : passwd
   : /etc/init.d/sshd start
 * Particionamento
+  - [[https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation#Partitioning_the_disk_with_GPT_for_UEFI][Gentoo Handbook: Partitioning the disk with GPT for UEFI]]
   #+BEGIN_EXAMPLE
   livecd ~ # fdisk -l /dev/sda
   Disk /dev/sda: 74.6 GiB, 80060424192 bytes, 156368016 sectors
@@ -74,7 +83,7 @@
   : mkfs.ext4 /dev/sdb2
   : mkfs.ext4 /dev/sdb3
   Se precisar uma partição UEFI
-  : mkfs.fat -F32 /dev/sda1
+  : mkfs.vfat -F32 /dev/sda1
   Desabilitar o journal em SSDs
   : mkfs.ext4 -O "^has_journal" /dev/sda2
 * Ativar swap
@@ -120,9 +129,14 @@
   : /mnt/gentoo/root/.bashrc
   : /mnt/gentoo/etc/ssh/ssh_config
   : /mnt/gentoo/etc/ssh/sshd_config
+
+  : ??? repos.conf
+  : mkdir --parents /mnt/gentoo/etc/portage/repos.conf
+  : cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+
 * Montar os sistemas de arquivos /proc, /sys e /dev
   #+BEGIN_EXAMPLE
-  mount -t proc /proc /mnt/gentoo/proc && mount --rbind /sys /mnt/gentoo/sys && mount --make-rslave /mnt/gentoo/sys && mount --rbind /dev /mnt/gentoo/dev && mount --make-rslave /mnt/gentoo/dev && echo 'OK!'
+  mount --types proc /proc /mnt/gentoo/proc && mount --rbind /sys /mnt/gentoo/sys && mount --make-rslave /mnt/gentoo/sys && mount --rbind /dev /mnt/gentoo/dev && mount --make-rslave /mnt/gentoo/dev && mount --bind /run /mnt/gentoo/run && mount --make-slave /mnt/gentoo/run && echo 'OK!'
   #+END_EXAMPLE
 * chroot in the new environment
   : chroot /mnt/gentoo /bin/bash
@@ -174,6 +188,9 @@
   /dev/sdb3       /home/Depot     ext4    defaults,noatime                0 2
 
   /dev/cdrom      /mnt/cdrom      auto    noauto,ro,user                  0 0
+
+  Energos    /mnt/vboxsf/Energos  vboxsf  noauto,uid=1000,gid=1000        0 0
+  Depot      /mnt/vboxsf/Depot    vboxsf  noauto,uid=1000,gid=1000        0 0
   #+END_EXAMPLE
 * Instalar fontes do kernel
   Ver [[https://wiki.gentoo.org/wiki/Kernel/Upgrade][Kernel/Upgrade - Gentoo Wiki]]
@@ -193,15 +210,19 @@
     por exemplo, [[https://wiki.gentoo.org/wiki/Gentoo_installation_tips_and_tricks#Using_the_Installation_CD_kernel][Gentoo Tricks and Tips - Using the Installation CD kernel]]
 * Senha root
   : passwd
+  /etc/security/password.conf
+  : enforce = none
 * Configurar rede
-  : /etc/conf.d/hostname
+  : /etc/conf.d/hostname ou melhor, /etc/hostname
   : /etc/hosts
 * Configurar serviços
   : emerge --ask --verbose --noreplace dhcpcd openssh syslog-ng logrotate cronie gpm chrony
   : rc-update add dhcpcd default && rc-update add cronie default && rc-update add sshd default && rc-update add syslog-ng default && rc-update add gpm default && rc-update add chronyd default && echo 'OK!'
   : rc-update show
 * Adicionar usuário
-  : useradd -m -G users,wheel,audio,video,lp,uucp,cdrom,portage,usb -s /bin/bash energos
+  : id
+  : uid=1000(energos) gid=1000(energos) groups=1000(energos),7(lp),10(wheel),14(uucp),18(audio),19(cdrom),27(video),35(games),85(usb),100(users),106(lpadmin),244(vboxusers),245(plugdev),250(portage)
+  : useradd -m -G users,wheel,audio,video,lp,uucp,cdrom,portage,usb,games,lpadmin,plugdev,vboxusers,vboxguest,vboxsf -s /bin/bash energos
   : passwd energos
 * Instalar boot-loader
   - Bios boot
@@ -285,3 +306,36 @@
   : reboot
 * Enjoy
   Funcionou :-)
+* Configuração ad nauseam
+
+alias startX='startx -- vt1 -dpi 144'
+~/bin
+.Xresources
+.bash_profile
+.bashrc
+.gitconfig
+.gitignore
+.gmrunrc
+.gtkrc-2.0
+.gtkrc-2.0.mine
+.tmux.com
+.xinitrc
+.pqprc
+.config/openbox
+.config/artha.conf
+.config/compton.conf
+.config/parcellite
+.config/fbpanel
+.config/conky
+.config/volumeicon
+.config/gtk-3.0
+.config/qt5ct
+.local/share/icons
+.local/share/fonts
+.images
+.fehbg
+
+iosevka?
+
+* Scroll
+- [[https://forums.virtualbox.org/viewtopic.php?t=103879][virtualbox.org - Unable to move mouse and scroll at the same time on Linux]]
