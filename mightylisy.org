@@ -9,11 +9,11 @@
   - Marcas citadas são propriedade de seus respectivos titulares
 * Placa mãe
   - [[https://www.msi.com/Motherboard/B350M-PRO-VH-PLUS][MSI B350M PRO-VH PLUS | MSI Global]]
-  - R$ 390 na [[https://www.kabum.com.br/produto/100127][KaBuM!]]
+  - R$ 390 na [[https://web.archive.org/web/20190513183338/https://www.kabum.com.br/produto/100127/placa-mae-msi-b350m-pro-vh-plus-amd-am4-matx-ddr4][KaBuM!]]
   - [[http://oc.jagatreview.com/2018/07/hands-on-overclocking-msi-b350m-pro-vh-plus-di-ryzen-2200g/][Hands-on Overclocking: MSI B350M Pro-VH Plus (di Ryzen 2200G) – Jagat OC]]
   - VRM - 4 fases para CPU e 2 fases para SOC - mosfets apenas razoáveis
     - [[https://www.hardwareluxx.de/community/f12/pga-am4-mainboard-vrm-liste-1155146.html][Übersicht - PGA AM4 Mainboard VRM Liste]]
-    - 1x NIKOS [[http://cn.niko-sem.com/manager_admin/upload_file/nikosem/831/154892228248319.pdf][PK616BA]] (lado alto) por fase, 2x NIKOS [[http://cn.niko-sem.com/manager_admin/upload_file/nikosem/195/154892229621955.pdf][PK632BA]] (lado baixo) por fase
+    - 1x NIKOS [[http://niko-sem.com/manager_admin/upload_file/nikosem/831/154892228248319.pdf][PK616BA]] (lado alto) por fase, 2x NIKOS [[http://niko-sem.com/manager_admin/upload_file/nikosem/195/154892229621955.pdf][PK632BA]] (lado baixo) por fase
   - Contras
     - VRM não é dos melhores
     - áudio Realtek ALC887 medíocre (não que eu perceba)
@@ -37,7 +37,7 @@
     - sem RGB
 * CPU
   - [[https://www.amd.com/en/products/cpu/amd-ryzen-7-2700][2nd Gen Ryzen™ 7 2700 Processor | AMD]]
-  - R$ 1270 na [[https://www.kabum.com.br/produto/95564][KaBuM!]], R$ 1200 na [[https://www.pichau.com.br/processador-amd-ryzen-7-2700-octa-core-3-2ghz-4-1ghz-turbo-20mb-cache-am4-yd2700bbafbox][Pichau]], R$ 1287 na [[https://www.terabyteshop.com.br/produto/9266/processador-amd-ryzen-7-2700-32ghz-41ghz-max-turbo-yd2700bbafbox-r2l-octa-core-16mb-cooler-wraith-spire-com-led-imp][Terabyte]]
+  - R$ 1270 na [[https://web.archive.org/web/20200210201846/https://www.kabum.com.br/produto/95564/processador-amd-ryzen-7-2700-cooler-wraith-spire-cache-20mb-3-2ghz-4-1ghz-max-turbo-am4-sem-video-yd2700bbafbox][KaBuM!]], R$ 1200 na [[https://www.pichau.com.br][Pichau]], R$ 1287 na [[https://www.terabyteshop.com.br][Terabyte]]
   - Contras
     - não é um [[https://www.amd.com/en/products/cpu/amd-ryzen-7-2700x][2700X]], nem um [[https://www.amd.com/en/products/cpu/amd-ryzen-9-3900x][3900X]], muito menos um [[https://www.amd.com/en/products/cpu/amd-ryzen-9-3950x][3950X]]
     - cooler anêmico, indispensável trocar se for fazer overclock
@@ -55,9 +55,9 @@
     - o cooler incluso é suficiente se não fizer overclock
     - irresistível em [[https://gatry.com/promocao/detalhes/89893/processador-amd-ryzen-7-2700-3-2-ghz-20mb-am4-yd2700bbafbox][oferta]] por R$ 850
 * Cooler
-  - [[http://www.deepcool.com/product/cpucooler/2017-01/7_6408.shtml][DEEPCOOL GAMMAXX 400 red]]
+  - [[https://web.archive.org/web/20190127134704/https://www.deepcool.com/product/cpucooler/2017-01/7_6408.shtml][DEEPCOOL GAMMAXX 400 red]]
   - R$ 100 na [[https://www.pichau.com.br/cooler-deepcool-gammaxx-400-led-vermelho-dp-mch4-gmx400rd][Pichau]]
-  - [[https://adrenaline.uol.com.br/forum/threads/review-deep-cool-gammaxx-400.594460/][Review Cooler Deep Cool Gammaxx 400 | Fórum Adrenaline]]
+  - [[https://forum.adrenaline.com.br/threads/review-deep-cool-gammaxx-400.594460/][Review Cooler Deep Cool Gammaxx 400 | Fórum Adrenaline]]
   - [[https://www.clubedohardware.com.br/artigos/refrigera%C3%A7%C3%A3o/teste-do-cooler-deepcool-gammaxx-400-r35936/][Teste do Cooler Deepcool Gammaxx 400 | Clube do Hardware]]
   - Contras
     - tem leds
@@ -70,15 +70,15 @@
     - não precisa (nem deve) remover ou trocar o 'backplate' da cpu
     - bom e barato, custo/benefício imbatível
 * Memória
-  - 2x [[https://www.crucial.com/usa/en/bls8g4d30aesbk][Crucial Ballistix Sport LT Gray 8GB DDR4-3000 (BLS8G4D30AESBK)]]
-  - R$ 300 na [[https://www.kabum.com.br/produto/101187/memoria-crucial-ballistix-sport-lt-8gb-3000mhz-ddr4-cl15-cinza-bls8g4d30aesbk/?tag=BLS8G4D30AESBK][KaBuM!]]
+  - 2x [[https://content.crucial.com/content/dam/ballistix/dram-products/sport-series/ddr4/sport-lt-2016/flyer/ballistix-sport-lt-ddr4-productflyer.pdf][Crucial Ballistix Sport LT Gray 8GB DDR4-3000 (BLS8G4D30AESBK)]]
+  - R$ 300 na [[https://www.kabum.com.br][KaBuM!]]
   - Contras
-    - muito cara mesmo na oferta por R$ 275 (memória ainda está com preços absurdos)
+    - muito cara mesmo na [[https://gatry.com/promocoes/89874/memoria-crucial-ballistix-sport-lt-8gb-3000mhz-ddr4-cl15-cinza-bls8g4d30aesbk][oferta]] por R$ 275 (memória ainda está com preços absurdos)
   - A Favor
     - está funcionando
 * Placa Vídeo
-  - [[http://www.xfxforce.com/en-us/products/amd-radeon-rx-500-series/rx-560d-4gb-sf-rx-560d4sfg5][XFX Radeon RX 560D 4GB (RX-560D4SFG5)]]
-  - R$ 690 na [[https://www.kabum.com.br/produto/92270/placa-de-video-xfx-amd-radeon-rx-560d-4gb-14cu-single-fan-gddr5-rx-560d4sfg5][KaBuM!]]
+  - [[https://www.xfxforce.com/gpus/amd-radeon-tm-rx-560-4gb-14cu-single-fan-2][XFX Radeon RX 560D 4GB (RX-560D4SFG5)]]
+  - R$ 690 na [[https://web.archive.org/web/20191120152306/https://www.kabum.com.br/produto/92270/placa-de-video-xfx-amd-radeon-rx-560d-4gb-14cu-single-fan-gddr5-rx-560d4sfg5][KaBuM!]]
   - [[https://www.youtube.com/watch?v=_36yNWw_07g][Por que AMD Radeon | YouTube]]
   - Contras
     - absurdamente cara mesmo na oferta por R$ 600
