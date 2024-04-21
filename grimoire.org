@@ -1,0 +1,13 @@
+#+TITLE: Grimoire
+#+AUTHOR: energos
+#+OPTIONS: toc:nil num:nil html-postamble:nil
+#+STARTUP: showall
+
+: xpkg -m | sort -f | md5sum
+: xbps-pkgdb -m auto <package>
+: xbps-pkgdb -m manual <package>
+: rsync -n -avhc --delete <some_directory>/ <some_host>:<some_directory>/
+: time echo "scale=5000; a(1)*4" | bc -l
+: xdg-mime query filetype <some_file>
+: xdg-mime query default application/pdf
+: xdg-mime default org.kde.okular.desktop application/pdf
