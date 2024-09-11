@@ -3,6 +3,7 @@
 #+OPTIONS: toc:nil num:nil html-postamble:nil
 #+STARTUP: showall
 
+* Unsorted
 : xpkg -m | sort -f | md5sum
 : xbps-pkgdb -m auto <package>
 : xbps-pkgdb -m manual <package>
@@ -11,3 +12,10 @@
 : xdg-mime query filetype <some_file>
 : xdg-mime query default application/pdf
 : xdg-mime default org.kde.okular.desktop application/pdf
+: xdg-mime default org.kde.dolphin.desktop inode/directory
+
+* Dolphin shows empty "Open with" menu
+[[https://bbs.archlinux.org/viewtopic.php?pid=2167442][Weird XDG MIME Behavior with KDE Dolphin on Hyprland / Applications & Desktop Environments / Arch Linux Forums]]
+** 1st workaround
+: emerge --ask --verbose plasma-workspace
+: ln -s /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
