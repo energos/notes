@@ -19,3 +19,5 @@
 ** 1st workaround
 : emerge --ask --verbose plasma-workspace
 : ln -s /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
+* Dunst does not start automatically
+[[https://forum.endeavouros.com/t/org-freedesktop-notifications-timeout-was-reached-error-calling-startservicebyname/36857][org.freedesktop.Notifications: Timeout was reached (Error calling StartServiceByName)]]
