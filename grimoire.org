@@ -24,3 +24,36 @@
 * Emacs
 - customize-themes
 - list-faces-display
+* Vulkan
+- [[https://askubuntu.com/questions/927601/i-think-im-using-radeon-instead-of-amdgpu-how-do-i-change][17.04 - I think I'm using radeon instead of amdgpu? How do I change? - Ask Ubuntu]]
+- [[https://wiki.archlinux.org/title/AMDGPU#Enable_Southern_Islands_(SI)_and_Sea_Islands_(CIK)_support][AMDGPU - ArchWiki]]
+- [[https://forums.lutris.net/t/solved-dxvk-error-failed-to-create-vulkan-1-1-instance/8418/4][(SOLVED) DXVK Error "Failed to create Vulkan 1.1 instance" - Support - Lutris Forums]]
+#+begin_example
+# /etc/default/grub
+...
+GRUB_CMDLINE_LINUX="radeon.cik_support=0 radeon.si_support=0 amdgpu.cik_support=1 amdgpu.si_support=1"
+...
+#+end_example
+
+#+begin_src bash :noeval
+  update-grub
+#+end_src
+
+#+begin_example
+# /etc/initramfs-tools/modules
+amdgpu
+radeon
+#+end_example
+
+#+begin_src bash :noeval
+  update-initramfs -u
+#+end_src
+
+#+begin_src bash :noeval
+  apt install vulkan-tools
+#+end_src
+
+#+begin_src bash :noeval
+  lspci -k -d ::03xx
+  vkcube
+#+end_src
