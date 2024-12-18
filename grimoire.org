@@ -14,6 +14,7 @@
 : xdg-mime default org.kde.okular.desktop application/pdf
 : xdg-mime default org.kde.dolphin.desktop inode/directory
 : xdg-settings set default-web-browser firefox-esr.desktop
+: aptitude --disable-columns search '~i' -F '%p %v'
 
 * Dolphin shows empty "Open with" menu
 [[https://bbs.archlinux.org/viewtopic.php?pid=2167442][Weird XDG MIME Behavior with KDE Dolphin on Hyprland / Applications & Desktop Environments / Arch Linux Forums]]
